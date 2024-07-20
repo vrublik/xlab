@@ -1,0 +1,19 @@
+version: '3'
+
+services:
+  web:
+    build: .
+    volumes:
+      - ./:/root/xlab/
+    network_mode: "host" # for VPN
+    depends_on:
+      - db
+
+
+  db:
+    tty: true
+    image: nouchka/sqlite3:latest
+    volumes:
+      - ./data/db:/root/xlab/data/db
+    environment:
+    - SQLITE3_DB=db.sqlite3
