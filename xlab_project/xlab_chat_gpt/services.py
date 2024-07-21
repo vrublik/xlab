@@ -31,7 +31,6 @@ class MessageGPT:
                 response=response.choices[0].message.content
             )
         except ValueError as e:
-            print(e)
             raise GenericAPIException(default_detail='Anonymous user, please login.',
                                       status_code=status.HTTP_401_UNAUTHORIZED)
 
@@ -46,11 +45,11 @@ class MessageGPT:
         assistant_content = data.get('assistant_content')
 
         messages = [
-            {"role": "user", "content": user_message}
+            {'role': 'user', 'content': user_message}
         ]
 
         if assistant_content:
-            messages.append({"role": "assistant", "content": assistant_content})
+            messages.append({'role': 'assistant', 'content': assistant_content})
 
         return messages
 

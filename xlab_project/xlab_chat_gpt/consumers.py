@@ -21,7 +21,7 @@ class ChatConsumer(AsyncJsonWebsocketConsumer):
         return user
 
     def parse_token(self):
-        token = (dict((x.split('=') for x in self.scope['query_string'].decode().split("&")))).get('token', None)
+        token = (dict((x.split('=') for x in self.scope['query_string'].decode().split('&')))).get('token', None)
         return token
 
     async def connect(self):
@@ -49,9 +49,9 @@ class ChatConsumer(AsyncJsonWebsocketConsumer):
 
         except GenericAPIException as e:
             await self.send_json({
-                "type": "websocket.close",
-                "code": e.status_code,
-                "reason": e.default_detail
+                'type': 'websocket.close',
+                'code': e.status_code,
+                'reason': e.default_detail
             })
 
 
