@@ -105,3 +105,11 @@ You can check db in docker using following commands:
 
 ## How to get API key:
 https://platform.openai.com/api-keys
+
+## Pytest
+All tests in `xlab_project/tests/` directory 
+
+> **Warning**  
+> Enable VPN before running the tests
+
+1. Run command: `pytest`
