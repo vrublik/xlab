@@ -1,12 +1,11 @@
 from channels.db import database_sync_to_async
 from channels.generic.websocket import AsyncJsonWebsocketConsumer
-from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
 from rest_framework.authtoken.models import Token
 
 from .errors import GenericAPIException
 from .serializers import MessageSerializer
-from .services import MessageGPT, AsyncMessageGPT
+from .services import AsyncMessageGPT
 
 
 class ChatConsumer(AsyncJsonWebsocketConsumer):
