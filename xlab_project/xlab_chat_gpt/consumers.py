@@ -1,12 +1,11 @@
 from channels.db import database_sync_to_async
 from channels.generic.websocket import AsyncJsonWebsocketConsumer
-from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
 from rest_framework.authtoken.models import Token
 
 from .errors import GenericAPIException
 from .serializers import MessageSerializer
-from .services import MessageGPT
+from .services import AsyncMessageGPT
 
 
 class ChatConsumer(AsyncJsonWebsocketConsumer):
@@ -40,9 +39,8 @@ class ChatConsumer(AsyncJsonWebsocketConsumer):
 
     async def receive_json(self, content, **kwargs):
         try:
-            message_gpt = MessageGPT(data=content, user=self.scope['user'])
-            message = message_gpt.create_message(save=False)
-            await message.asave()
+            async_message_gpt = AsyncMessageGPT(self.send_json, data=content, user=self.scope['user'], stream=True)
+            message = await async_message_gpt.create_message()
 
             serializer = MessageSerializer(message)
             await self.send_json(content=serializer.data)
